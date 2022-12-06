@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingResource
+import com.udacity.project4.locationreminders.data.dto.ReminderDTO
 import java.util.UUID
 
 /**
@@ -35,9 +36,11 @@ import java.util.UUID
 class DataBindingIdlingResource : IdlingResource {
     // list of registered callbacks
     private val idlingCallbacks = mutableListOf<IdlingResource.ResourceCallback>()
+
     // give it a unique id to workaround an espresso bug where you cannot register/unregister
     // an idling resource w/ the same name.
     private val id = UUID.randomUUID().toString()
+
     // holds whether isIdle is called and the result was false. We track this to avoid calling
     // onTransitionToIdle callbacks if Espresso never thought we were idle in the first place.
     private var wasNotIdle = false
@@ -109,3 +112,7 @@ fun DataBindingIdlingResource.monitorFragment(fragmentScenario: FragmentScenario
         this.activity = it.requireActivity()
     }
 }
+
+fun generateReminderDTO() = ReminderDTO(
+    "reminder title", "reminder description", "location", 0.0, 0.0
+)
